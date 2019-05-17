@@ -6,7 +6,6 @@ import android.os.Build
 import android.text.SpannableString
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -17,7 +16,7 @@ import android.widget.TextView
  * If you want to see the output, you should use console in any of your layouts,
  * all calls to console static write methods will affect all instantiated consoles.
  */
-open class Console : FrameLayout {
+class Console : FrameLayout {
 
   companion object {
 
@@ -102,18 +101,14 @@ open class Console : FrameLayout {
     return userTouchingListener.isUserTouching || flingProperty.isFlinging
   }
 
-  constructor(context: Context) : super(context) {
-  }
+  constructor(context: Context) : super(context)
 
-  constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-  }
+  constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-  }
+  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-  }
+  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
   init {
     controller.add(this)
@@ -153,6 +148,12 @@ open class Console : FrameLayout {
   }
 
   private fun scrollFullDown() {
-    scrollView.fullScroll(View.FOCUS_DOWN)
+    val lastChild = scrollView.getChildAt(scrollView.childCount - 1)
+    val bottom = lastChild.bottom + scrollView.paddingBottom
+    val sy = scrollView.scrollY
+    val sh = scrollView.height
+    val delta = bottom - (sy + sh)
+
+    scrollView.smoothScrollBy(0, delta)
   }
 }
