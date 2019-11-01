@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="#121212"
     android:scrollbarThumbVertical="@drawable/console_scrollbar_handle"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:layout_gravity="bottom">
 
     <EditText
       android:id="@+id/console_text"
@@ -16,12 +17,13 @@
       android:textColor="#dddddd"
       android:textIsSelectable="true"
       android:typeface="monospace"
+      android:scrollbars="vertical"
       android:inputType="none"
       android:hint="@string/log_text"
       android:scrollHorizontally="false"
       android:enabled="true"
       android:editable="false"
-      android:focusableInTouchMode="false"
+      android:focusableInTouchMode="true"
       android:importantForAutofill="no" />
   </ScrollView>
 

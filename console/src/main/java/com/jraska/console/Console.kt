@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -130,7 +131,7 @@ class Console : FrameLayout {
     // need to have extra post here, because scroll view is fully initialized after another frame
     post { scrollDown() }
 
-    val timerInterval = 2 * 1000
+    val timerInterval = 2000
 
     fixedRateTimer(
       "consoleTimer",
@@ -147,52 +148,12 @@ class Console : FrameLayout {
     fullScrollScheduled = false
   }
 
-  private val maxLine = 10;
+  private val maxLines = 500;
   private val lock = Any()
 
   // remove leading lines from beginning of the output view
   private fun removeOldLines() {
-
-    // Erase excessive lines
-    val excessLineNumber = textView.lineCount - maxLine;
-    if (excessLineNumber > 0) {
-
-      var eolIndex = -1;
-      var lines = textView.text.toString().split("\n");
-      eolIndex = lines[lines.count()- maxLine].indexOf("\n")
-
-      if (eolIndex == -1) {
-        //not found
-      } else {
-        // we can delete everything from start to that index:
-        Handler(Looper.getMainLooper()).post(Runnable {
-          synchronized(lock) {
-            controller.buffer.clear()
-            controller.buffer.append(textView.editableText.delete(0, eolIndex))
-            printScroll()
-          }
-        })
-      }
-    }
-
-    /**
-    if (textView.lineCount > MAX_OUTPUT_LINES) {
-      val linesToRemove = textView.lineCount - MAX_OUTPUT_LINES
-      Handler(Looper.getMainLooper()).post(Runnable {
-        for (i in 0..linesToRemove) {
-          val text = textView.editableText
-          val lineStart = textView.layout.getLineStart(0)
-          val lineEnd = textView.layout.getLineEnd(0)
-
-          text.delete(lineStart, lineEnd)
-        }
-
-        //TODO: Try to not delete everything, but only the old content...
-//        controller.buffer.clear()
-//        writeLine(text)
-      })
-    }
-    */
+    controller.buffer.clearOldLines(maxLines)
   }
 
   internal fun printScroll() {
