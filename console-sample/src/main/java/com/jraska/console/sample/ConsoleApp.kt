@@ -2,10 +2,14 @@ package com.jraska.console.sample
 
 import android.app.Application
 import android.util.Log
+import com.jraska.console.Console
 import com.jraska.console.timber.ConsoleTree
 import timber.log.Timber
+import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.concurrent.fixedRateTimer
 
 class ConsoleApp : Application() {
   override fun onCreate() {
@@ -25,5 +29,6 @@ class ConsoleApp : Application() {
     Timber.plant(consoleTree)
 
     Timber.i("Test message before attach of any view")
+
   }
 }

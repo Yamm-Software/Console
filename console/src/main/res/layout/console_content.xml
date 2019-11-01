@@ -9,13 +9,20 @@
     android:scrollbarThumbVertical="@drawable/console_scrollbar_handle"
     android:fillViewport="true">
 
-    <TextView
+    <EditText
       android:id="@+id/console_text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textColor="#dddddd"
       android:textIsSelectable="true"
-      android:typeface="monospace"/>
+      android:typeface="monospace"
+      android:inputType="none"
+      android:hint="@string/log_text"
+      android:scrollHorizontally="false"
+      android:enabled="true"
+      android:editable="false"
+      android:focusableInTouchMode="false"
+      android:importantForAutofill="no" />
   </ScrollView>
 
 </merge>

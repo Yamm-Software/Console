@@ -72,7 +72,7 @@ class ConsoleActivity : AppCompatActivity() {
   }
 
   private fun onAsyncClicked() {
-    val chattyAsync = ChattyAsync(1000L)
+    val chattyAsync = ChattyAsync(100L)
     chattyAsync.execute()
   }
 

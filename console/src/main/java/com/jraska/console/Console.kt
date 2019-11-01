@@ -3,12 +3,17 @@ package com.jraska.console
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableString
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ScrollView
-import android.widget.TextView
+import kotlin.concurrent.fixedRateTimer
+import kotlin.math.max
+
 
 /**
  * Console like output view, which allows writing via static console methods
@@ -85,11 +90,12 @@ class Console : FrameLayout {
     internal val controller = ConsoleController()
   }
 
-  private val textView: TextView
+  private val textView: EditText
   private val scrollView: ScrollView
   private val userTouchingListener = UserTouchingListener()
   private val flingProperty: FlingProperty
   private val scrollDownRunnable = Runnable { scrollFullDown() }
+  private val MAX_OUTPUT_LINES = 15
 
   val text: CharSequence
     get() = textView.text.toString()
@@ -123,12 +129,70 @@ class Console : FrameLayout {
     printBuffer()
     // need to have extra post here, because scroll view is fully initialized after another frame
     post { scrollDown() }
+
+    val timerInterval = 2 * 1000
+
+    fixedRateTimer(
+      "consoleTimer",
+      initialDelay = timerInterval.toLong(),
+      period = timerInterval.toLong()
+    ) {
+      removeOldLines()
+    }
   }
 
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
     fullScrollScheduled = false
+  }
+
+  private val maxLine = 10;
+  private val lock = Any()
+
+  // remove leading lines from beginning of the output view
+  private fun removeOldLines() {
+
+    // Erase excessive lines
+    val excessLineNumber = textView.lineCount - maxLine;
+    if (excessLineNumber > 0) {
+
+      var eolIndex = -1;
+      var lines = textView.text.toString().split("\n");
+      eolIndex = lines[lines.count()- maxLine].indexOf("\n")
+
+      if (eolIndex == -1) {
+        //not found
+      } else {
+        // we can delete everything from start to that index:
+        Handler(Looper.getMainLooper()).post(Runnable {
+          synchronized(lock) {
+            controller.buffer.clear()
+            controller.buffer.append(textView.editableText.delete(0, eolIndex))
+            printScroll()
+          }
+        })
+      }
+    }
+
+    /**
+    if (textView.lineCount > MAX_OUTPUT_LINES) {
+      val linesToRemove = textView.lineCount - MAX_OUTPUT_LINES
+      Handler(Looper.getMainLooper()).post(Runnable {
+        for (i in 0..linesToRemove) {
+          val text = textView.editableText
+          val lineStart = textView.layout.getLineStart(0)
+          val lineEnd = textView.layout.getLineEnd(0)
+
+          text.delete(lineStart, lineEnd)
+        }
+
+        //TODO: Try to not delete everything, but only the old content...
+//        controller.buffer.clear()
+//        writeLine(text)
+      })
+    }
+    */
   }
 
   internal fun printScroll() {
