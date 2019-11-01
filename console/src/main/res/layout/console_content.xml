@@ -24,6 +24,7 @@
       android:enabled="true"
       android:editable="false"
       android:focusableInTouchMode="true"
+      android:gravity="bottom"
       android:importantForAutofill="no" />
   </ScrollView>
 

@@ -10,6 +10,11 @@ import kotlinx.android.synthetic.main.activity_main.toolbar
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.Date
+import android.os.AsyncTask
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+
 
 class ConsoleActivity : AppCompatActivity() {
 
@@ -64,7 +69,70 @@ class ConsoleActivity : AppCompatActivity() {
   }
 
   private fun addSampleRecord() {
-    Console.writeLine("Sample console record at " + currentTime())
+    AsyncTask.execute {
+      // background thread:
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+      Console.writeLine("Sample record at " + currentTime())
+    }
   }
 
   private fun currentTime(): String {
@@ -72,7 +140,7 @@ class ConsoleActivity : AppCompatActivity() {
   }
 
   private fun onAsyncClicked() {
-    val chattyAsync = ChattyAsync(100L)
+    val chattyAsync = ChattyAsync(10L)
     chattyAsync.execute()
   }
 

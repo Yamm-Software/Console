@@ -3,18 +3,13 @@ package com.jraska.console
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.text.SpannableString
-import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ScrollView
 import kotlin.concurrent.fixedRateTimer
-import kotlin.math.max
-
 
 /**
  * Console like output view, which allows writing via static console methods
@@ -96,7 +91,6 @@ class Console : FrameLayout {
   private val userTouchingListener = UserTouchingListener()
   private val flingProperty: FlingProperty
   private val scrollDownRunnable = Runnable { scrollFullDown() }
-  private val MAX_OUTPUT_LINES = 15
 
   val text: CharSequence
     get() = textView.text.toString()

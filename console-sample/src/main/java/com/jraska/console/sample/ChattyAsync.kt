@@ -57,11 +57,8 @@ class ChattyAsync(val sleepTime: Long) : AsyncTask<Any, Void, Void>() {
     Timber.i("Finally shutting up")
 
     Console.writeLine("Async just started")
-    sleep(sleepTime)
     Timber.d("Message from async after %s ms", sleepTime)
-    sleep(sleepTime)
     Timber.w("Note done yet, %s ms left", sleepTime)
-    sleep(sleepTime)
     Timber.i("Finally shutting up")
 
     return null

@@ -5,7 +5,6 @@ import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.widget.TextView
-import java.lang.Thread.sleep
 
 internal class ConsoleBuffer {
   private val lock = Any()
@@ -58,7 +57,7 @@ internal class ConsoleBuffer {
 
         for (i in 0..excessLineNumber) {
           val lastIndex = lines[i].lastIndex + 2 // for the new line "\n"
-          Log.i("hey", "line $i: lastIndex: $lastIndex")
+//          Log.i("hey", "line $i: lastIndex: $lastIndex")
           eolIndex += lastIndex
         }
 
